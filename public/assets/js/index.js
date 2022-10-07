@@ -54,7 +54,8 @@ const deleteNote = id =>
     headers: {
       'Content-Type': 'application/json'
     }
-  });
+  })
+    .then(getAndRenderNotes);
 
 const renderActiveNote = () => {
   hide(saveNoteBtn);
@@ -89,6 +90,7 @@ const handleNoteDelete = e => {
   e.stopPropagation();
 
   const note = e.target;
+  console.log(note);
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
 
   if (activeNote.id === noteId) {
@@ -108,7 +110,7 @@ const handleNoteView = e => {
   renderActiveNote();
 };
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
+// Sets the activeNote to an empty object and allows the user to enter a new note
 const handleNewNoteView = e => {
   activeNote = {};
   renderActiveNote();
