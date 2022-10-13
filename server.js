@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
-const notes = require('./db/db.json')
+let notes = require('./db/db.json')
 console.log(notes);
 
 const PORT = process.env.PORT || 3001;
@@ -39,9 +39,10 @@ app.delete('/api/notes/:id', (req, res) => {
     const { id } = req.params;
     const savedNotes = notes.filter(note => note.id !== id);
     console.log(savedNotes);
+    notes = savedNotes;
     fs.writeFileSync('./db/db.json', JSON.stringify(savedNotes));
 
-    return res.send();
+    res.json({ ok: true });
 })
 
 // app.get('*', (req, res) => {
